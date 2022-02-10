@@ -2,9 +2,12 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-
+var Database = require("./database");
+Database.connect()
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
+var cors = require('cors');
+var helmet = require('helmet');
 
 var app = express();
 // app.use((error, req, res, next) => {
@@ -12,6 +15,8 @@ var app = express();
 //   console.log("Path: ", req.path);
 //   next(); // (optional) invoking next middleware
 // });
+app.use(cors());
+app.use(helmet());
 app.use(logger("dev"));
 app.use((req, res, next) => {
   console.log("Check Token,  Path: ", req.path);
